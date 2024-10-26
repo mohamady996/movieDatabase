@@ -16,7 +16,11 @@ class SecondVM{
     let similarMovies = BehaviorSubject<[SimilarMovieResult]>(value: [])
     private let bag = DisposeBag()
     private var id :Int?
-    
+    let casts = BehaviorSubject<[Cast]>(value: [])
+    var castList: [Cast] = []
+    let directors = BehaviorSubject<[Cast]>(value: [])
+    var directorsList: [Cast] = []
+
     
     //MARK: - Initializers
     init() {
@@ -61,6 +65,8 @@ class SecondVM{
             .subscribe(onSuccess: { [weak self] (similarMoviesResponse: SimilarMoviesResponse) in
                 
                 self?.similarMovies.onNext( Array( similarMoviesResponse.similarMoviesResults?.prefix(5) ?? [] ))
+                
+                self?.fetchAllCast()
             }, onFailure: { [weak self] apiError in
                 self?.similarMovies.onNext([])
             })
@@ -68,27 +74,36 @@ class SecondVM{
     }
     
     ///Fetches cast of the movie
-    func fetchCast(){
-//        let urlString = "https://api.themoviedb.org/3/search/movie"
-//        let headers = [
-//            "accept": "application/json",
-//              "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiOGVmMGVhNTc3ZDBjYjc4ZDdhYmU2MWRmMGI0MjE2MiIsIm5iZiI6MTcyOTk0ODA0NS40MDcyOTUsInN1YiI6IjY3MWNlMjNlOWZmNjgxZDllMGE0MzE0YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.PuwiYyegT45tifVnUMlKF-dHLgrGs4yJR57WBSzq8rk"
-//            ]
-//        let queryItems = [
-//                    URLQueryItem(name: "query", value: name),
-//                    URLQueryItem(name: "include_adult", value: "false"),
-//                    URLQueryItem(name: "language", value: "en-US"),
-//                    URLQueryItem(name: "page", value: "1"),
-//                ]
-//        print(queryItems)
-//        print(urlString)
-//        NetworkManager.shared.fetchData(from: urlString, method: .get, headers: headers, queryItems: queryItems)
-//            .subscribe(onSuccess: { [weak self] (movieList: MovieList) in
-//                self?.movies.onNext(movieList.movies ?? [])
-//            }, onFailure: { [weak self] apiError in
-//                self?.movies.onNext([])
-//            })
-//            .disposed(by: bag)
+    func fetchAllCast(){
+        do {
+            for movie in try similarMovies.value() {
+                print("similar movie id: \(movie.id)")
+                fetchCast(for: movie.id ?? 0)
+            }
+        }catch{
+            print("Failed to retrieve items:", error)
+        }
+    }
+    
+    private
+    func fetchCast(for id: Int){
+        
+        let urlString = "https://api.themoviedb.org/3/movie/\(id)/credits"
+        let headers = [
+            "accept": "application/json",
+              "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiOGVmMGVhNTc3ZDBjYjc4ZDdhYmU2MWRmMGI0MjE2MiIsIm5iZiI6MTcyOTk0ODA0NS40MDcyOTUsInN1YiI6IjY3MWNlMjNlOWZmNjgxZDllMGE0MzE0YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.PuwiYyegT45tifVnUMlKF-dHLgrGs4yJR57WBSzq8rk"
+            ]
+        NetworkManager.shared.fetchData(from: urlString, method: .get, headers: headers)
+            .subscribe(onSuccess: { [weak self] (fetchCastResponse: FetchCastResponse) in
+                self?.castList.append(contentsOf: fetchCastResponse.cast ?? [])
+                self?.casts.onNext(self?.castList ?? [])
+
+                self?.directorsList.append(contentsOf: fetchCastResponse.crew ?? [])
+                self?.directors.onNext(self?.directorsList ?? [])
+            }, onFailure: { [weak self] apiError in
+                self?.casts.onNext([])
+            })
+            .disposed(by: bag)
     }
 
 }

@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import Combine
 import Kingfisher
 
 class SecondVC: UIViewController, UIScrollViewDelegate {
@@ -24,6 +25,10 @@ class SecondVC: UIViewController, UIScrollViewDelegate {
     //Second Section
     @IBOutlet weak var similarMoviesCollectionView: UICollectionView!
     
+    //ThirdSection
+    @IBOutlet weak var actorsCollectionView: UICollectionView!
+    @IBOutlet weak var directorsCollectionView: UICollectionView!
+    
     private let bag = DisposeBag()
     private let viewModel = SecondVM()
     var movieID = BehaviorSubject<Int?>(value: nil)
@@ -35,6 +40,7 @@ class SecondVC: UIViewController, UIScrollViewDelegate {
         bindMovieID()
         bindFirstSection()
         bindSecondSection()
+        bindThirdSection()
     }
     
     private
@@ -53,7 +59,7 @@ class SecondVC: UIViewController, UIScrollViewDelegate {
         
         self.viewModel.movieDetails.subscribe(onNext: { [weak self] movieDetails in
             
-            if let url = URL(string: "https://image.tmdb.org/t/p/w1280\(movieDetails?.image ?? "")"), movieDetails?.image != nil {
+            if let url = URL(string: "https://image.tmdb.org/t/p/original\(movieDetails?.image ?? "")"), movieDetails?.image != nil {
                 self?.movieImage.kf.setImage(with: url)
             }else{
                 self?.movieImage.kf.setImage(with: URL(string: "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg"))
@@ -79,13 +85,56 @@ class SecondVC: UIViewController, UIScrollViewDelegate {
         viewModel.similarMovies.bind(to: similarMoviesCollectionView.rx.items(cellIdentifier: SimilarMovieCell.identifier, cellType: SimilarMovieCell.self)) { (row,item,cell) in
             cell.configure(with: item)
         }.disposed(by: bag)
-        
     }
     
     private
     func bindThirdSection() {
-        
+        bindDirectorsCollectionView()
+        bindActorsCollectionView()
     }
     
+    private
+    func bindActorsCollectionView() {
+        self.actorsCollectionView.register(CastCell.nib(), forCellWithReuseIdentifier: CastCell.identifier)
+        
+        actorsCollectionView.rx.setDelegate(self).disposed(by: bag)
+        
+        viewModel.casts.map { items in
+            // Apply filter, sort, and limit to first 5 items
+            self.removeDuplicates(items: items)
+                .filter { $0.knownForDepartment == "Acting" } // Filter Cast by Actors
+                .sorted { $0.popularity ?? 0.0 > $1.popularity ?? 0.0 } // Sort items by priority in descending order
+                .prefix(5) // Limit to first 5 items
+        }
+        .map { Array($0) } // Convert to Array because prefix returns a SubSequence
+        .bind(to: actorsCollectionView.rx.items(cellIdentifier: CastCell.identifier, cellType: CastCell.self)) { (row,item,cell) in
+            cell.configure(with: item)
+        }.disposed(by: bag)
+    }
+    
+    private
+    func bindDirectorsCollectionView() {
+        self.directorsCollectionView.register(CastCell.nib(), forCellWithReuseIdentifier: CastCell.identifier)
+        
+        directorsCollectionView.rx.setDelegate(self).disposed(by: bag)
+        
+        viewModel.directors.map { items in
+            // Apply filter, sort, and limit to first 5 items
+            self.removeDuplicates(items: items)
+                .filter { $0.knownForDepartment == "Directing" } // Filter Cast by Directors
+                .sorted { $0.popularity ?? 0.0 > $1.popularity ?? 0.0 } // Sort items by priority in descending order
+                .prefix(5) // Limit to first 5 items
+        }
+        .map { Array($0) } // Convert to Array because prefix returns a SubSequence
+        .bind(to: directorsCollectionView.rx.items(cellIdentifier: CastCell.identifier, cellType: CastCell.self)) { (row,item,cell) in
+            cell.configure(with: item)
+        }.disposed(by: bag)
+    }
+    
+    private
+    func removeDuplicates(items: [Cast]) -> [Cast] {
+        let uniqueItems = Dictionary(grouping: items, by: { $0.id }).compactMap { $0.value.first }
+        return uniqueItems
+    }
     
 }

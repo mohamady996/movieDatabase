@@ -24,16 +24,16 @@
                                 <rect key="frame" x="0.0" y="0.0" width="150" height="130"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XzX-dD-u1t">
-                                        <rect key="frame" x="20" y="10" width="110" height="110"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="XzX-dD-u1t" secondAttribute="height" multiplier="100:100" id="Yvn-iU-hoK"/>
-                                        </constraints>
+                                        <rect key="frame" x="0.0" y="0.0" width="150" height="130"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="XzX-dD-u1t" secondAttribute="bottom" id="34s-Lb-fdq"/>
+                                    <constraint firstItem="XzX-dD-u1t" firstAttribute="top" secondItem="ea8-9o-RJo" secondAttribute="top" id="9hh-qp-0O5"/>
+                                    <constraint firstAttribute="trailing" secondItem="XzX-dD-u1t" secondAttribute="trailing" id="9ly-6s-6dy"/>
                                     <constraint firstItem="XzX-dD-u1t" firstAttribute="centerY" secondItem="ea8-9o-RJo" secondAttribute="centerY" id="Lll-dy-3GC"/>
-                                    <constraint firstItem="XzX-dD-u1t" firstAttribute="top" secondItem="ea8-9o-RJo" secondAttribute="top" constant="10" id="PfM-E3-S6b"/>
+                                    <constraint firstItem="XzX-dD-u1t" firstAttribute="leading" secondItem="ea8-9o-RJo" secondAttribute="leading" id="Qi4-Cz-Qt2"/>
                                     <constraint firstItem="XzX-dD-u1t" firstAttribute="centerX" secondItem="ea8-9o-RJo" secondAttribute="centerX" id="frW-HN-Mbx"/>
                                 </constraints>
                             </view>

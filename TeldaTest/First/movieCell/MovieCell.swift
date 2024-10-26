@@ -24,7 +24,7 @@ class MovieCell: UITableViewCell {
     func configure(with movie:MovieResult){
         self.selectionStyle = .none
 
-        if let url = URL(string: "https://image.tmdb.org/t/p/w1280\(movie.backdropPath ?? "")"), movie.backdropPath != nil {
+        if let url = URL(string: "https://image.tmdb.org/t/p/original\(movie.backdropPath ?? "")"), movie.backdropPath != nil {
             movieImage.kf.setImage(with: url)
         }else{
             movieImage.kf.setImage(with: URL(string: "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg"))
