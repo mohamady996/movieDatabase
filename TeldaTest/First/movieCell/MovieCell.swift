@@ -22,6 +22,8 @@ class MovieCell: UITableViewCell {
     }
     
     func configure(with movie:Movie){
+        self.selectionStyle = .none
+
         if let url = URL(string: "https://image.tmdb.org/t/p/w1280\(movie.backdropPath ?? "")"), movie.backdropPath != nil {
             movieImage.kf.setImage(with: url)
         }else{
@@ -30,7 +32,6 @@ class MovieCell: UITableViewCell {
         movieTitle.text = movie.title
         movieOverView.text = movie.overview
         movieReleaseDate.text = movie.releaseDate
-        self.selectionStyle = .none
     }
     
 }

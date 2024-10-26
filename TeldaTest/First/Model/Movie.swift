@@ -7,27 +7,6 @@
 
 import Foundation
 
-struct MovieDetails: Decodable{
-    var image: String
-    var title: String
-    var overview: String
-    var tagLine: String
-    var revenue: String
-    var releaseDate: String
-    var statues: String
-    
-    init(image: String, title: String, overview: String, tagLine: String, revenue: String, releaseDate: String, statues: String) {
-        self.image = image
-        self.title = title
-        self.overview = overview
-        self.tagLine = tagLine
-        self.revenue = revenue
-        self.releaseDate = releaseDate
-        self.statues = statues
-    }
-    
-}
-
 // MARK: - Movie
 struct MovieList: Codable {
     let page: Int?
