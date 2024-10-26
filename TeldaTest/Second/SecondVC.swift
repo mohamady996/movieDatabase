@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import Kingfisher
 
-class SecondVC: UIViewController {
+class SecondVC: UIViewController, UIScrollViewDelegate {
     
     //First Section
     @IBOutlet weak var movieImage: UIImageView!
@@ -20,6 +20,9 @@ class SecondVC: UIViewController {
     @IBOutlet weak var revenueValue: UILabel!
     @IBOutlet weak var releaseDateValue: UILabel!
     @IBOutlet weak var statusValue: UILabel!
+    
+    //Second Section
+    @IBOutlet weak var similarMoviesCollectionView: UICollectionView!
     
     private let bag = DisposeBag()
     private let viewModel = SecondVM()
@@ -62,12 +65,20 @@ class SecondVC: UIViewController {
             self?.revenueValue.text = movieDetails?.revenue
             self?.releaseDateValue.text = movieDetails?.releaseDate
             self?.statusValue.text = movieDetails?.status
-        })
+        }).disposed(by: bag)
         
     }
     
+    
     private
     func bindSecondSection() {
+        self.similarMoviesCollectionView.register(SimilarMovieCell.nib(), forCellWithReuseIdentifier: SimilarMovieCell.identifier)
+        
+        similarMoviesCollectionView.rx.setDelegate(self).disposed(by: bag)
+        
+        viewModel.similarMovies.bind(to: similarMoviesCollectionView.rx.items(cellIdentifier: SimilarMovieCell.identifier, cellType: SimilarMovieCell.self)) { (row,item,cell) in
+            cell.configure(with: item)
+        }.disposed(by: bag)
         
     }
     

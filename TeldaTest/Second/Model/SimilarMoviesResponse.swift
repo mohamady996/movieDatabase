@@ -1,35 +1,34 @@
 //
-//  MovieDetails.swift
+//  SimilarMoviesResponse.swift
 //  TeldaTest
 //
 //  Created by mohamad ghonem on 26/10/2024.
 //
 
-import Foundation
-
-// MARK: - Movie
-struct MovieList: Codable {
+// MARK: - SimilarMoviesResponse
+struct SimilarMoviesResponse: Codable {
     let page: Int?
-    let movies: [MovieResult]?
+    let similarMoviesResults: [SimilarMovieResult]?
     let totalPages, totalResults: Int?
 
     enum CodingKeys: String, CodingKey {
         case page
-        case movies = "results"
+        case similarMoviesResults = "results"
         case totalPages = "total_pages"
         case totalResults = "total_results"
     }
 }
 
 // MARK: - Result
-struct MovieResult: Codable {
+struct SimilarMovieResult: Codable {
     let adult: Bool?
     let backdropPath: String?
     let genreIDS: [Int]?
     let id: Int?
-    let originalTitle, overview: String?
+    let originalLanguage, originalTitle, overview: String?
     let popularity: Double?
-    let posterPath, releaseDate, title: String?
+    let posterPath: String?
+    let releaseDate, title: String?
     let video: Bool?
     let voteAverage: Double?
     let voteCount: Int?
@@ -39,6 +38,7 @@ struct MovieResult: Codable {
         case backdropPath = "backdrop_path"
         case genreIDS = "genre_ids"
         case id
+        case originalLanguage = "original_language"
         case originalTitle = "original_title"
         case overview, popularity
         case posterPath = "poster_path"

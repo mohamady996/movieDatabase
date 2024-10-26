@@ -21,7 +21,7 @@ class MovieCell: UITableViewCell {
         return UINib(nibName: "MovieCell", bundle: nil)
     }
     
-    func configure(with movie:Movie){
+    func configure(with movie:MovieResult){
         self.selectionStyle = .none
 
         if let url = URL(string: "https://image.tmdb.org/t/p/w1280\(movie.backdropPath ?? "")"), movie.backdropPath != nil {

@@ -13,7 +13,7 @@ import RxCocoa
 class FirstVM{
     
     //MARK: - Initialize ViewModel
-    let movies = BehaviorSubject<[Movie]>(value: [])
+    let movies = BehaviorSubject<[MovieResult]>(value: [])
     private let bag = DisposeBag()
     
     

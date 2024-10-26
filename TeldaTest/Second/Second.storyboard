@@ -20,8 +20,8 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fb1-N8-P8f">
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="tmm-fj-767">
-                                        <rect key="frame" x="10" y="0.0" width="373" height="839.66666666666663"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="tmm-fj-767">
+                                        <rect key="frame" x="10" y="0.0" width="373" height="854"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="va9-oy-Vla" userLabel="Details">
                                                 <rect key="frame" x="0.0" y="0.0" width="373" height="483.33333333333331"/>
@@ -198,16 +198,16 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W5s-kM-feu" userLabel="Similar Movies">
-                                                <rect key="frame" x="0.0" y="493.33333333333326" width="373" height="246"/>
+                                                <rect key="frame" x="0.0" y="503.33333333333331" width="373" height="240.33333333333331"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="esL-Ds-wtY">
-                                                        <rect key="frame" x="0.0" y="0.0" width="373" height="246"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="373" height="240.33333333333334"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WXs-yP-aP6">
                                                                 <rect key="frame" x="0.0" y="0.0" width="373" height="40.333333333333336"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="Similar Movies" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5aA-D8-TVu">
-                                                                        <rect key="frame" x="10" y="9.9999999999999982" width="353" height="20.333333333333329"/>
+                                                                        <rect key="frame" x="10" y="10.000000000000055" width="353" height="20.333333333333329"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
@@ -221,9 +221,20 @@
                                                                     <constraint firstAttribute="trailing" secondItem="5aA-D8-TVu" secondAttribute="trailing" constant="10" id="l8e-JA-OtA"/>
                                                                 </constraints>
                                                             </view>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="wSa-XS-j93">
-                                                                <rect key="frame" x="0.0" y="40.3333333333333" width="373" height="205.66666666666663"/>
-                                                            </stackView>
+                                                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="aGS-QP-JDZ">
+                                                                <rect key="frame" x="0.0" y="40.333333333333314" width="373" height="200"/>
+                                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="200" id="weO-cn-cgy"/>
+                                                                </constraints>
+                                                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Oxj-LS-Lpc">
+                                                                    <size key="itemSize" width="128" height="128"/>
+                                                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                                </collectionViewFlowLayout>
+                                                                <cells/>
+                                                            </collectionView>
                                                         </subviews>
                                                     </stackView>
                                                 </subviews>
@@ -236,7 +247,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ozZ-ov-Enu" userLabel="Cast">
-                                                <rect key="frame" x="0.0" y="749.33333333333337" width="373" height="90.333333333333371"/>
+                                                <rect key="frame" x="0.0" y="763.66666666666663" width="373" height="90.333333333333371"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="14t-wc-OVW">
                                                         <rect key="frame" x="0.0" y="0.0" width="373" height="90.333333333333329"/>
@@ -260,7 +271,7 @@
                                                                 </constraints>
                                                             </view>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="k8T-se-08h">
-                                                                <rect key="frame" x="0.0" y="40.333333333333258" width="373" height="50"/>
+                                                                <rect key="frame" x="0.0" y="40.333333333333371" width="373" height="50"/>
                                                             </stackView>
                                                         </subviews>
                                                     </stackView>
@@ -302,6 +313,7 @@
                         <outlet property="overViewValue" destination="AhK-Av-eck" id="q4J-CP-LCF"/>
                         <outlet property="releaseDateValue" destination="hum-i7-82n" id="UOk-bc-SLi"/>
                         <outlet property="revenueValue" destination="FgZ-Bq-zLr" id="lQd-vR-Zur"/>
+                        <outlet property="similarMoviesCollectionView" destination="aGS-QP-JDZ" id="GvZ-TU-YQ2"/>
                         <outlet property="statusValue" destination="5I7-7h-gHT" id="k37-ah-2ZB"/>
                         <outlet property="titleValue" destination="xaK-qC-2ge" id="QQN-64-toB"/>
                     </connections>

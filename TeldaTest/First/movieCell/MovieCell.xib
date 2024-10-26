@@ -15,31 +15,31 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="avU-dR-5bb">
-                    <rect key="frame" x="10" y="69" width="648" height="303"/>
+                    <rect key="frame" x="10" y="69.000000000000028" width="648.33333333333337" height="482.66666666666674"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VJG-uF-eia">
-                            <rect key="frame" x="0.0" y="0.0" width="321.66666666666669" height="303"/>
+                            <rect key="frame" x="0.0" y="0.0" width="321.66666666666669" height="482.66666666666669"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="VJG-uF-eia" secondAttribute="height" multiplier="100:150" id="hRY-Ez-aBa"/>
                             </constraints>
                         </imageView>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="EFe-gP-mhu">
-                            <rect key="frame" x="326.66666666666674" y="0.0" width="321.33333333333326" height="303"/>
+                            <rect key="frame" x="326.66666666666663" y="0.0" width="321.66666666666663" height="482.66666666666669"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ebU-gw-JX8">
-                                    <rect key="frame" x="0.0" y="0.0" width="321.33333333333331" height="18"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="321.66666666666669" height="18"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xD4-x9-dXg">
-                                    <rect key="frame" x="0.0" y="23" width="321.33333333333331" height="257"/>
+                                    <rect key="frame" x="0.0" y="23" width="321.66666666666669" height="436.66666666666669"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sxg-xt-ROO">
-                                    <rect key="frame" x="0.0" y="285" width="321.33333333333331" height="18"/>
+                                    <rect key="frame" x="0.0" y="464.66666666666663" width="321.66666666666669" height="18"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>

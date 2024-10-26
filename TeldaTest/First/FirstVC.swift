@@ -38,7 +38,7 @@ class FirstVC: UIViewController {
             cell.configure(with: item)
         }.disposed(by: bag)
         
-        moviesTableView.rx.modelSelected(Movie.self).subscribe(onNext: { movie in
+        moviesTableView.rx.modelSelected(MovieResult.self).subscribe(onNext: { movie in
             print("SelectedItem: \(movie.title)")
             self.navigateToDetail(id: movie.id ?? 0)
         }).disposed(by: bag)
