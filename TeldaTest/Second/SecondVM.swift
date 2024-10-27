@@ -16,7 +16,8 @@ class SecondVM{
     let similarMovies = BehaviorSubject<[SimilarMovieResult]>(value: [])
     private let bag = DisposeBag()
     private var id :Int?
-    
+    let dispatchGroup = DispatchGroup()
+
     var allSimilarMoviesIDs: [Int] = []
     
     let casts = BehaviorSubject<[Cast]>(value: [])
@@ -35,7 +36,9 @@ class SecondVM{
         fetchMovieDetails()
         fetchSimilarMovies()
         
-        fetchAllSimilarMovies()
+        DispatchQueue.global(qos: .background).async {
+            self.fetchAllSimilarMovies()
+        }
     }
     
     ///Fetches the movie Details
@@ -101,7 +104,6 @@ class SecondVM{
     private
     func fetchAllSimilarMovies(){
         let urlString = "https://api.themoviedb.org/3/movie/\(self.id!)/similar"
-        let dispatchGroup = DispatchGroup()
         let queryItems = (1...500).map { "\($0)" } // Create different query items
         let headers = [
             "accept": "application/json",
@@ -118,9 +120,9 @@ class SecondVM{
                     self?.allSimilarMoviesIDs.append( similarMovie.id ?? 0)
                 }
                 print("similar movies request completed")
-                dispatchGroup.leave()
+                self?.dispatchGroup.leave()
             }, onFailure: { [weak self] apiError in
-                dispatchGroup.leave()
+                self?.dispatchGroup.leave()
             }).disposed(by: bag)
         }
         
