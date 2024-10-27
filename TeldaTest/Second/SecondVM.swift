@@ -17,7 +17,7 @@ class SecondVM{
     private let bag = DisposeBag()
     private var id :Int?
     
-    var allSimilarMovies: [SimilarMovieResult] = []
+    var allSimilarMoviesIDs: [Int] = []
     
     let casts = BehaviorSubject<[Cast]>(value: [])
     var castList: [Cast] = []
@@ -71,23 +71,10 @@ class SecondVM{
                 
                 self?.similarMovies.onNext( Array( similarMoviesResponse.similarMoviesResults?.prefix(5) ?? [] ))
                 
-//                self?.fetchAllCast()
             }, onFailure: { [weak self] apiError in
                 self?.similarMovies.onNext([])
             })
             .disposed(by: bag)
-    }
-    
-    ///Fetches cast of the movie
-    func fetchAllCast(){
-        do {
-            for movie in try similarMovies.value() {
-                print("similar movie id: \(movie.id)")
-                fetchCast(for: movie.id ?? 0)
-            }
-        }catch{
-            print("Failed to retrieve items:", error)
-        }
     }
     
     private
@@ -126,7 +113,10 @@ class SecondVM{
             dispatchGroup.enter() // Enter the dispatch group for each request
             NetworkManager.shared.fetchData(from: urlString, method: .get, headers: headers, queryItems: queries).subscribe(onSuccess: { [weak self] (similarMoviesResponse: SimilarMoviesResponse) in
                 
-                self?.allSimilarMovies.append(contentsOf: similarMoviesResponse.similarMoviesResults ?? [])
+                
+                for similarMovie in similarMoviesResponse.similarMoviesResults ?? []{
+                    self?.allSimilarMoviesIDs.append( similarMovie.id ?? 0)
+                }
                 print("similar movies request completed")
                 dispatchGroup.leave()
             }, onFailure: { [weak self] apiError in
@@ -136,7 +126,7 @@ class SecondVM{
         
         // Notify when all requests are complete
         dispatchGroup.notify(queue: .main) {
-            print("All similar movies request completed: \(self.allSimilarMovies.count)")
+            print("All similar movies request completed: \(self.allSimilarMoviesIDs.count)")
             self.fetchAllCastForAllSimilarMovies()
         }
     }
@@ -149,8 +139,8 @@ class SecondVM{
             "accept": "application/json",
               "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiOGVmMGVhNTc3ZDBjYjc4ZDdhYmU2MWRmMGI0MjE2MiIsIm5iZiI6MTcyOTk0ODA0NS40MDcyOTUsInN1YiI6IjY3MWNlMjNlOWZmNjgxZDllMGE0MzE0YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.PuwiYyegT45tifVnUMlKF-dHLgrGs4yJR57WBSzq8rk"
             ]
-        for movie in allSimilarMovies {
-            let url = "https://api.themoviedb.org/3/movie/\(movie.id ?? 0)/credits"
+        for id in allSimilarMoviesIDs {
+            let url = "https://api.themoviedb.org/3/movie/\(id)/credits"
         
             dispatchGroup.enter() // Enter the dispatch group for each request
             NetworkManager.shared.fetchData(from: url, method: .get, headers: headers).subscribe(onSuccess: { [weak self] (fetchCastResponse: FetchCastResponse) in
@@ -166,7 +156,7 @@ class SecondVM{
         
         // Notify when all requests are complete
         dispatchGroup.notify(queue: .main) {
-            print("All cast request completed: \(self.allSimilarMovies.count)")
+            print("All cast request completed: \(self.directorsList.count)")
             self.casts.onNext(self.castList ?? [])
             self.directors.onNext(self.directorsList ?? [])
         }

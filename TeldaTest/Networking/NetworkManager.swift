@@ -37,8 +37,6 @@ class NetworkManager {
             let httpMethod: HTTPMethod = (method == .get) ? .get : .post
             let httpHeaders = HTTPHeaders(headers ?? [:]) // Convert dictionary to Alamofire's HTTPHeaders type
 
-            print("\nURL: \(url)")
-            print("\nHeaders: \(headers)")
             // Perform network request with Alamofire
             let request = AF.request(url, method: httpMethod, parameters: parameters, encoding: JSONEncoding.default, headers: httpHeaders)
                 .validate()
